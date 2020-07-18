@@ -18,14 +18,13 @@
   body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
   .fa-anchor,.fa-coffee {font-size:200px}
-  img {
-  width: 50%;
-}
   </style>
   <body>
 
     <!-- Navigation -->
   <nav class="w3-bar w3-black">
+	  <img src="/images/logo.png" width="10%">
+	  <p></p>
       <a href="./index.html" class="w3-button w3-bar-item">Home</a>
       <a href="./about-us.html" class="w3-button w3-bar-item">Info</a>
       <a href="./logon.php" class="w3-button w3-bar-item">Logon</a>
