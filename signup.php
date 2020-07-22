@@ -1,4 +1,5 @@
-<?php require_once('Connections/mysql.php');
+<?php 
+	require 'Connections/mysql.php';
 	if(isset($_POST['Register'])){
 		session_start();
 		$Fname = $_POST['Fname'];
