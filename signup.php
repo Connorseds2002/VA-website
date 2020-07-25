@@ -1,17 +1,44 @@
-<?php 
-	require 'Connections/mysql.php';
-	if(isset($_POST['Register'])){
-		session_start();
-		$Fname = $_POST['Fname'];
-		$Lname = $_POST['Lname'];
-		$uername = $_POST['username'];
-		$Email = $_POST['Email'];
-		$password = $_POST['password'];
-		
-		
-		$sql-> $mysql("INSERT INTO users (Fname, Lname, Username, Email, Password)Values('{$Fname}','{$Lname}','{$uername}','{$Email}','{$password}')");
-	}
-?>
+<?php
+$error = NULL;
+if(isset($_POST['submit'])){
+
+// Getting the data from the form to use for the data bace to add the used to the data bace
+
+$Fn= $_POST['Fn'];
+$Ln= $_POST['Ln'];
+$Username= $_POST['Username'];
+$Email= $_POST['Email'];
+$Rp= $_POST['rp'];
+// conneating to the data bace of where the data of all of the uses for the ntwork is stored
+$mysqli = new MySQLi('localhost', 'justicemc_fsd', 'buZO.J2Wv9,w', 'justicem_atc.aircraft');
+$Fn = $mysqli->real_escape_string($Ln);
+$Ln = $mysqli->real_escape_string($LN);
+$Username = $mysqli->real_escape_string($Username);
+$Email = $mysqli->real_escape_string($Email);
+$Rp = $mysqli->real_escape_string($Rp);
+
+// creating a Vkey for the user to use to make shore that there are not a rebot on the network
+$vKey = md5(time() . $fn . $Ln);
+
+// adding the data on to the data so then that you uses will be added to the network and get and email with there id and Vkey 
+$insert = $mysqli->query("INSERT INTO accounts(firstname,lastname,Username,email,password) VALUES('$Fn','$Ln','$Username','$email','$rp'");
+
+if($insert){
+    echo "Success you have been created an account on our network and you will be sent an email in the next 10mins from us to chck you are a real persion with your id and and key";
+    $result = $mysqli->query("SELECT id FROM accounts LIMIT 1");
+    $to = $Email;
+    $subject = "Justicemc Flight Sim network Verification";
+    $message = "$Fn Thanks for creating an account on the vEuroJet website,\r\n
+    CID: $result \r\n
+    Code: $vKey \r\n";
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= 'From: noreply@justicemc.co.uk' . "\r\n";
+    $headers .= 'Cc: admin@justicemc.co.uk' . "\r\n";
+}else{
+    $error = "<P>"$mysqli->error "</p>";
+}
+}
 <html><!-- InstanceBegin template="/Templates/website.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
 <meta charset="utf-8">
@@ -43,60 +70,42 @@
     </nav>
     <!-- InstanceBeginEditable name="EditRegion1" -->
 	  <div id="Content">
-	  	<div id="ContentRight"><form method="POST" action="" name="Register" id="Register"><table width="416" border="0" >
-  <tbody>
-    <tr>
-      <td><table border="0">
-        <tbody>
-          <tr>
-            <td><label for="Fname">First Name:</label>
-              <input name="Fname" type="text" class="StyleTextField" id="Fname"></td>
-            <td><label for="Lname">Last Name:</label>
-              <input type="text" name="Lname" class="StyleTextField" id="Lname"></td>
-          </tr>
-        </tbody>
-      </table></td>
-    </tr>
-    <tr >
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td><label for="email">Email:</label>
-        <input type="email" name="email" class="StyleTextField" id="email"></td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td><label for="Username">Username:</label>
-        <input type="text" name="Username" class="StyleTextField" id="username"></td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td><label for="password">Password:</label>
-        <input type="password" name="password" class="StyleTextField" id="password"></td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td><input type="button" name="button" id="button" value="Register"></td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-    </tr>
-  </tbody>
-</table>
-	  	    <input type="hidden" name="MM_insert" value="Register">
+	  	<div id="ContentRight"><form method="POST" action="">
+            <table border="0" align="right" cellpadding="5">
+                <tr>
+                    <td align="right">Firstname:</td>
+                    <td><input type="txt" name="Fn" required></td>
+                </tr>
+                <tr>
+                    <td align="right">Lastname:</td>
+                    <td><input type="txt" name="Ln" required></td>
+                </tr>
+                <tr>
+                    <td align="right">Username:</td>
+                    <td><input type="txt" name="Username" required></td>
+                </tr>
+                <tr>
+                    <td align="right">Email:</td>
+                    <td><input type="email" name="Email" required></td>
+                </tr>
+                <tr>
+                    <td align="right">Passowrd:</td>
+                    <td><input type="password" name="Rp" required></td>
+                </tr>
+                <tr>
+                    <td align="rigth">FIR:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" name="submit" value="Register for an account on our network"/></td>
+                </tr>
+            </table>
         </form></div>
 		<div id="ContentLeft"></div>
 	  </div>
-	  <p></p>
+	  <?php
+        echo $error
+        ?>
     <!-- InstanceEndEditable -->
 
 	  <footer class="w3-container w3-padding-64 w3-center w3-blue-grey w3-xlarge">
