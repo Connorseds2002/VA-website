@@ -19,7 +19,7 @@
   <body>
 
     <!-- Navigation -->
-  <nav class="w3-bar w3-black">
+  <nav class="w3-bar backround">
 	  <a href="index.php"><img src="./images/logo.png" width="10%"></a>
 	  <p></p>
       <a href="./index.php" class="w3-button w3-bar-item">Home</a>
